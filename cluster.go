@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gomodule/redigo/redis"
+	redigotrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/gomodule/redigo"
 )
 
 // HashSlots is the number of slots supported by redis cluster.
@@ -41,13 +42,13 @@ type Cluster struct {
 	StartupNodes []string
 
 	// DialOptions is the list of options to set on each new connection.
-	DialOptions []redis.DialOption
+	DialOptions []interface{}
 
 	// CreatePool is the function to call to create a redis.Pool for the
 	// specified TCP address, using the provided options as set in DialOptions.
 	// If this field is not nil, a redis.Pool is created for each node in the
 	// cluster and the pool is used to manage the connections returned by Get.
-	CreatePool func(address string, options ...redis.DialOption) (*redis.Pool, error)
+	CreatePool func(address string, options ...interface{}) (*redis.Pool, error)
 
 	// PoolWaitTime is the time to wait when getting a connection from a pool
 	// configured with MaxActive > 0 and Wait set to true, and MaxActive
@@ -278,7 +279,7 @@ func (c *Cluster) getConnForAddr(addr string, forceDial bool) (redis.Conn, error
 	}
 	if c.CreatePool == nil || forceDial {
 		c.mu.Unlock()
-		return redis.Dial("tcp", addr, c.DialOptions...)
+		return redigotrace.Dial("tcp", addr, c.DialOptions...)
 	}
 
 	p := c.pools[addr]
