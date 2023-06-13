@@ -1,4 +1,4 @@
-module github.com/aanari/redisc
+module github.com/geneva/redisc
 
 go 1.16
 
