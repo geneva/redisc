@@ -1,3 +1,6 @@
+# Archived note (from Jeff)
+This repository was originally created to facilitate tracing in sockets. A change was made that [negated the requirement](https://github.com/geneva/geneva/pull/4176) for this fork, so it was archived on 5/12/2025.
+
 [![Go Reference](https://pkg.go.dev/badge/github.com/mna/redisc.svg)](https://pkg.go.dev/github.com/mna/redisc)
 [![Build Status](https://github.com/mna/redisc/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/mna/redisc/actions)
 
